@@ -1,22 +1,42 @@
-import React from 'react';
+import React, { Component } from "react";
+import "./Contact.css";
+import PropTypes from "prop-types";
 
+export default class Contact extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { online: props.online };
+  }
+  render() {
+    return (
+      <div className="Contact">
+        <img className="avatar" src={this.props.avatar} alt="{props.name}" />
+        <div>
+          <h4 className="name">{this.props.name}</h4>
+          <div
+            className="status"
+            onClick={(event) => {
+              this.state.online
+                ? this.setState({ online: false })
+                : this.setState({ online: true });
+            }}
+          >
+            <div
+              className={this.state.online ? "status-online" : "status-offline"}
+            />
 
-
-const online = true;
-
-function Contact(){
-  return(
-    <div className="Contact">
-      <img className="avatar" src="https://randomuser.me/api/portraits/women/93.jpg" alt="avatar"/>
-      <div className="status">
-        <h2 className="name">Anita Sutton</h2>
-        <p className="status">
-          <div className="status-online"></div>
-          <p className="status-text">{online ? "Online" : 'Offline'}</p>
-        </p>
+            <p className="status-text">
+              {this.state.online ? "online" : "offline"}
+            </p>
+          </div>
+        </div>
       </div>
-    </div>
-  )
+    );
+  }
 }
 
-export default Contact;
+Contact.propTypes = {
+  avatar: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  online: PropTypes.bool.isRequired,
+};
